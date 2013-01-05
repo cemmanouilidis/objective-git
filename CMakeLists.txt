@@ -15,16 +15,23 @@ file(GLOB_RECURSE SRC_H Classes/*.h)
 
 set(XCODE_FRAMEWORKS /Applications/Xcode.app/Contents/Developer/Library/Frameworks/)
 
-set(CMAKE_C_COMPILER   "clang")    #minimum required version clang 3.2
-set(CMAKE_CXX_COMPILER "clang++")  #minimum required version clang 3.2
+set(CMAKE_C_COMPILER   "clang")  #minimum required version clang 3.2
+set(CMAKE_CXX_COMPILER "clang")  #minimum required version clang 3.2
 
-set(CMAKE_CXX_FLAGS "")
-
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu99")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstant-string-class=NSConstantString")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fmessage-length=0")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fblocks")
+
+if("${CMAKE_SYSTEM}" MATCHES "Linux")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I$ENV{GNUSTEP_INSTALL_DIR}/include")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fobjc-runtime=gnustep")
+endif()
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fobjc-arc")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fasm-blocks")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Xclang -fobjc-default-synthesize-properties")
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${ObjectiveGitFramework_SOURCE_DIR}/ObjectiveGitFramework_Prefix.pch")
 
 
@@ -48,24 +55,13 @@ endforeach()
 
 
 # Create library ObjectiveGit ------------------------------------------------#
-add_library(ObjectiveGit SHARED ${SRC})
-set_target_properties(
-    ObjectiveGit 
-    PROPERTIES PREFIX 
-    ""
-)
+add_library(ObjectiveGit STATIC ${SRC})
 
 include_directories(
     Classes 
     Classes/Categories/ 
     libgit2/include 
     ${HEADER_DIR}
-)
-
-target_link_libraries(
-    ObjectiveGit
-    "-framework Foundation"
-    z ssl crypto "${CMAKE_BINARY_DIR}/libgit2.a"
 )
 
 add_dependencies(ObjectiveGit libgit2.a)

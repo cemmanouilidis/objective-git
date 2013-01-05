@@ -87,12 +87,12 @@
 
 + (NSURL *)_gitURLForURL:(NSURL *)url error:(NSError **)error {
 	if (!url.isFileURL) {
-		if (error != NULL) *error = [NSError errorWithDomain:NSCocoaErrorDomain code:kCFURLErrorUnsupportedURL userInfo:@{ NSLocalizedDescriptionKey: @"not a local file URL" }];
+		if (error != NULL) *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSURLErrorUnsupportedURL userInfo:@{ NSLocalizedDescriptionKey: @"not a local file URL" }];
 		return nil;
 	}
 	NSURL *filePathURL = url.filePathURL;
 	if (filePathURL == nil) {
-		if (error != NULL) *error = [NSError errorWithDomain:NSCocoaErrorDomain code:kCFURLErrorUnsupportedURL userInfo:@{ NSLocalizedDescriptionKey: @"not a valid file path URL" }];
+		if (error != NULL) *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSURLErrorUnsupportedURL userInfo:@{ NSLocalizedDescriptionKey: @"not a valid file path URL" }];
 		return nil;
 	}
 
@@ -505,14 +505,14 @@ static int file_status_callback(const char *relativeFilePath, unsigned int gitSt
 	// bare repository, you may be looking for gitDirectoryURL
 	if (path == NULL) return nil;
 
-	return [NSURL fileURLWithPath:@(path) isDirectory:YES];
+    return [[NSURL alloc] initFileURLWithPath:@(path) isDirectory:YES];
 }
 
 - (NSURL *)gitDirectoryURL {
 	const char *path = git_repository_path(self.git_repository);
 	if (path == NULL) return nil;
 
-	return [NSURL fileURLWithPath:@(path) isDirectory:YES];
+    return [[NSURL alloc] initFileURLWithPath:@(path) isDirectory:YES];
 }
 
 - (GTObjectDatabase *)objectDatabase {

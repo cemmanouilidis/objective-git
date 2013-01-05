@@ -3,6 +3,7 @@
 *~.nib
 
 build/*
+build.cmake/*
 ObjectiveGitFramework/build/*
 ObjectiveGit-iOS.framework/*
 libgit2*.a

@@ -47,7 +47,7 @@
 }
 
 - (void)dealloc {
-	self.git_tree_entry = nil;
+	self.git_tree_entry = NULL;
 }
 
 

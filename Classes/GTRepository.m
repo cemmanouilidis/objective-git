@@ -90,7 +90,9 @@
 		if (error != NULL) *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSURLErrorUnsupportedURL userInfo:@{ NSLocalizedDescriptionKey: @"not a local file URL" }];
 		return nil;
 	}
-	NSURL *filePathURL = url.filePathURL;
+	
+    NSURL *filePathURL = url;
+
 	if (filePathURL == nil) {
 		if (error != NULL) *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSURLErrorUnsupportedURL userInfo:@{ NSLocalizedDescriptionKey: @"not a valid file path URL" }];
 		return nil;

@@ -18,6 +18,7 @@ set(XCODE_FRAMEWORKS /Applications/Xcode.app/Contents/Developer/Library/Framewor
 set(CMAKE_C_COMPILER   "clang")  #minimum required version clang 3.2
 set(CMAKE_CXX_COMPILER "clang")  #minimum required version clang 3.2
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu99")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstant-string-class=NSConstantString")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fmessage-length=0")

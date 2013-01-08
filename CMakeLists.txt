@@ -1,13 +1,11 @@
 cmake_minimum_required(VERSION 2.8)
 project(ObjectiveGitFramework)
 
-add_custom_target(
-    libgit2.a 
-    COMMAND scripts/update_libgit2.sh
-    COMMAND cp ${ObjectiveGitFramework_SOURCE_DIR}/libgit2.a ${CMAKE_BINARY_DIR} 
-    WORKING_DIRECTORY ${ObjectiveGitFramework_SOURCE_DIR}
-    COMMENT "Updating libgit2..."
-)
+set(BUILD_SHARED_LIBS OFF)
+set(BUILD_CLAR OFF) 
+set(THREADSAFE OFF)
+add_subdirectory(libgit2)
+
 
 # Collect sourcefiles
 file(GLOB_RECURSE SRC Classes/*.m)
@@ -70,4 +68,4 @@ include_directories(
     ${HEADER_DIR}
 )
 
-add_dependencies(ObjectiveGit libgit2.a)
+add_dependencies(ObjectiveGit git2)

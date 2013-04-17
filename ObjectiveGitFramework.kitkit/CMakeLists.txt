@@ -49,6 +49,7 @@ include_directories(
 target_link_libraries(
     ObjectiveGit 
     git2
+    ${CMAKE_EXE_LINKER_FLAGS}
 )
 
 add_dependencies(ObjectiveGit git2)

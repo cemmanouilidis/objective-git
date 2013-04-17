@@ -3,7 +3,7 @@ project(ObjectiveGitFramework)
 
 set(PROJECT_DIR ${ObjectiveGitFramework_SOURCE_DIR}/..)
 
-set(BUILD_SHARED_LIBS OFF)
+set(BUILD_SHARED_LIBS ON)
 set(BUILD_CLAR OFF) 
 set(THREADSAFE OFF)
 add_subdirectory(${PROJECT_DIR}/libgit2 ${CMAKE_CURRENT_BINARY_DIR}/libgit2)
@@ -37,13 +37,18 @@ endforeach()
 
 
 # Create library ObjectiveGit ------------------------------------------------#
-add_library(ObjectiveGit STATIC ${SRC})
+add_library(ObjectiveGit SHARED ${SRC})
 
 include_directories(
     ${PROJECT_DIR}/Classes 
     ${PROJECT_DIR}/Classes/Categories/ 
     ${PROJECT_DIR}/libgit2/include 
     ${HEADER_DIR}
+)
+
+target_link_libraries(
+    ObjectiveGit 
+    git2
 )
 
 add_dependencies(ObjectiveGit git2)
